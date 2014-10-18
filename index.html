@@ -39,6 +39,8 @@
       var map = null;
       var current = null;
       var current_filter = null;
+      var current_location_marker = null;
+      var current_location_circle = null;
 
       $(function() {
 
@@ -81,8 +83,16 @@
 
       function locationChanged(position) 
       {
-          var radius = position.coords.accuracy / 2;
+          showCurrentLocation(position.coords.latitude, position.coords.longitude, position.coords.accuracy);
+      }
 
+      function showCurrentLocation(lat, lon, accuracy)
+      {
+        var radius = accuracy / 2;
+        var loc = L.latLng(lat,lon);
+
+        if(current_location_marker == null)
+        {
           var locationIcon = L.icon({
               iconUrl: 'images/marker-icon.png',
               iconRetinaUrl: 'images/marker-icon-2x.png',
@@ -94,29 +104,26 @@
               shadowAnchor: [10, 41]
           });
 
-          var loc = L.latLng(position.coords.latitude, position.coords.longitude);
-          L.marker(loc, {icon:locationIcon}).addTo(map);
-          L.circle(loc, radius).addTo(map);
+          current_location_marker = L.marker(loc, {icon:locationIcon}).addTo(map);
+        }
+        else
+          current_location_marker.setLatLng(loc);
+
+        if(current_location_circle == null)
+        {
+          current_location_circle = L.circle(loc, radius).addTo(map);
+        }
+        else
+        {
+          current_location_circle.setLatLng(loc);
+          current_location_circle.setRadius(radius);
+        }
       }
 
 
       function onLocationFound(e) 
       {
-        var radius = e.accuracy / 2;
-
-        var locationIcon = L.icon({
-            iconUrl: 'images/marker-icon.png',
-            iconRetinaUrl: 'images/marker-icon-2x.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [12, 0],
-            shadowUrl: 'images/marker-shadow.png',
-            shadowSize: [41, 41],
-            shadowAnchor: [10, 41]
-        });
-
-        L.marker(e.latlng, {icon:locationIcon}).addTo(map);
-        L.circle(e.latlng, radius).addTo(map);
+        showCurrentLocation(e.latlng.lat, e.latlng.lng, e.accuracy);
       }
 
       function onLocationError(e) 
