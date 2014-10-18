@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <style type="text/css">
+      .popup-container {
+        max-height:200px;
+        overflow: scroll;
+      }
+
+      div.label {
+        font-weight: bold;
+        margin-top:10px;
+      }
+
+      form button
+      {
+        font-size:x-large;
+
+      }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.0.min.js"></script>
+    <script src="js/leaflet.js"></script>
+  </head>
+  <body>
+  
+
+    <div id="map-canvas"></div>
+
+    <script type="text/javascript">
+      var map = null;
+      var current = null;
+      var current_filter = null;
+
+      $(function() {
+
+          Parse.initialize("SP4alRjyHRf8l5J8XBz7EeNUHYq63YHtw2KSGd1A", "rzTDXw4GTyvp5qKOJb3VrtbaNmcrsUzFvGm8V39R");
+
+          map = L.map("map-canvas").setView(L.latLng(61.15368, -150.05472), 10);
+
+          L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+              maxZoom:18,
+              id: 'examples.map-20v6611k'
+          }).addTo(map);
+
+        // var points = [];
+        // points.push(L.latLng(61.15368, -150.05472));
+        // points.push(L.latLng(61.15338, -150.02272));
+        // points.push(L.latLng(61.25338, -150.12272));
+
+        // var polyline = L.polyline(points, {"color":"red"}).addTo(map);
+        // polyline.bindPopup("hi <b>there</b><a href='http://www.google.com'>edit me</a>");
+        //polyline.bindPopup(popupHtml(feature));
+
+
+          clearMap();
+
+          loadGeoJson("data/all.geojson");
+          //loadGeoJson("output/muni/all.geojson");
+          //loadGeoJson("https://s3.amazonaws.com/aktrails/1/muni/kincaid_ski_trails/all.geojson");
+      });
+
+      function clearAndLoad(url)
+      {
+        clearMap();
+        loadGeoJson(url);
+      }
+
+      function loadGeoJson(url)
+      {
+          $.get(url, null, function(obj) {
+            current = obj;
+            drawGeoJson();
+          }, "json");
+      }
+
+      function drawGeoJson()
+      {
+        if(current != null)
+        {
+          current_filter = {};
+          for (var i = 0; i < current.features.length; i++)
+          {
+              var feature = current.features[i];
+
+              //fill the empty_feature with a superset of fields (for filtering later)
+              for(var key in feature.properties)
+              {
+                if(feature.properties.hasOwnProperty(key))
+                {
+                  var val = feature.properties[key];
+                  if(!current_filter[key])
+                    current_filter[key] = {};
+
+                  if(val != null)
+                  {
+                    if(current_filter[key][val])
+                      current_filter[key][val]++;
+                    else
+                      current_filter[key][val] = 1;
+                  }
+                }
+              }
+
+              var geom = feature.geometry;
+
+              if(geom != null)
+              {
+                var points = [];
+
+                //we could be working with LineStrings or MultiLineStrings here
+                if(geom.type == "LineString")
+                {
+                  for (var j = 0; j < geom.coordinates.length; j++)
+                  {
+                      var ll = L.latLng(geom.coordinates[j][1],geom.coordinates[j][0]);
+                      points.push(ll);
+                  }
+                }
+                else if(geom.type == "MultiLineString")
+                {
+                  for (var j = 0; j < geom.coordinates.length; j++)
+                  {
+                    for(var k = 0; k < geom.coordinates[j].length; k++)
+                    {
+                      var ll = L.latLng(geom.coordinates[j][k][1],geom.coordinates[j][k][0]);
+                      points.push(ll);
+                    }
+                  }
+                }
+
+                var opts = {opacity:0.75, weight:2, color:'green'};
+                var polyline = L.polyline(points, opts).addTo(map);
+                polyline.bindPopup(popupHtml(feature));
+                //store a reference to the polyline with the feature
+                //this is so that we can do a quick search later
+                feature.polyline = polyline;
+              }
+          }
+        }
+      }
+
+      function keys(obj)
+      {
+        var k = [];
+        for(var key in obj)
+        {
+          if(obj.hasOwnProperty(key))
+          {
+            k.push(key);
+          }
+        }
+        return k;
+      }
+
+
+      function clearMap()
+      {
+        for(i in map._layers) {
+            if(map._layers[i]._path != undefined) {
+                map.removeLayer(map._layers[i]);
+            }
+        }
+      }
+
+      function saveTrail(button)
+      {
+          var container = $(button).parents("form.trail-form");
+          var values = container.serializeArray();
+          var saveme = {};
+          for (var i = 0; i < values.length; i++) {
+            saveme[values[i].name] = values[i].value;
+          }
+
+          var checkboxes = container.find(":checkbox");
+
+          saveme["summer_usage"] = 0;
+          saveme["winter_usage"] = 0;
+
+          checkboxes.each( function() {
+            var cb = $(this);
+            var name = cb.attr("name");
+            var ischecked = cb.is(":checked");
+            var value = parseInt(cb.attr("value"));
+            if(ischecked)
+            {
+              saveme[name] += value;
+            }
+          });
+
+
+          var TrailObject = Parse.Object.extend("Trail");
+          var newTrail = new TrailObject();
+          newTrail.save(saveme).then(function(object) {
+            alert("Saved it.");
+          });
+      }
+
+      function popupHtml(feature)
+      {
+        var key = feature.properties["source"] + " / " + feature.properties["system"] + " / " + feature.properties["name"];
+        var html = "<div class='popup-container'><form class='trail-form'><div><b>" + feature.properties["source"] + " / " + feature.properties["system"] + " / " + feature.properties["name"] + "</b></div>";
+
+        html += "<input type='hidden' name='source' value='" + feature.properties["source"] + "'/>";
+        html += "<input type='hidden' name='system' value='" + feature.properties["system"] + "'/>";
+        html += "<input type='hidden' name='name' value='" + feature.properties["name"] + "'/>";
+
+        html += "<div class='label'>Lighting</div><div>" + dropDown("lighting", ["Yes","No"], feature.properties["lighting"]) + "</div>";
+        html += "<div class='label'>Surface</div><div>" + dropDown("surface", ["Earth","Asphalt","Gravel","Concrete","Other","Unknown"], feature.properties["surface"]) + "</div>";
+        html += "<div class='label'>Ski Mode</div><div>" + dropDown("ski_mode", ["Skate","Classic","Both"], feature.properties["ski_mode"]) + "</div>";
+        html += "<div class='label'>Ski Difficulty</div><div>" + dropDown("ski_difficulty", ["Novice","Intermediate","Advanced","Unknown"], feature.properties["ski_difficulty"]) + "</div>";
+        html += "<div class='label'>Direction</div><div>" + dropDown("direction", ["2way","1way","1wayreverse","Unknown"], feature.properties["direction"]) + "</div>";
+        html += "<div class='label'>Handicap Accessible</div><div>" + dropDown("handicap_accessible", ["Yes","No"], feature.properties["handicap_accessible"]) + "</div>";
+        html += "<div class='label'>Summer Usage</div><div>" + usageFlags("summer_usage", feature.properties["summer_usage"]) + "</div>";
+        html += "<div class='label'>Winter Usage</div><div>" + usageFlags("winter_usage", feature.properties["winter_usage"]) + "</div>";
+        html += "<div class='label'>Comments</div><div><textarea rows='5' style='width:90%;' name='comments'></textarea></div>";
+        html += "<div class='label'>Image URL</div><div><input style='width:90%;' type='text' name='image_url'/></div>";
+        html += "<p><button type='button' onclick='saveTrail(this);'>Save</button></p>";
+
+
+        html += "</form></div>";
+        return html;
+      }
+
+      function dropDown(name, options, value)
+      {
+        var html = "<select name='" + name + "'><option></option>";
+        for (var i = 0; i < options.length; i++) {
+          html += "<option value='" + options[i] + "' " + (value == options[i] ? "selected" : "") + ">" + options[i] + "</option>";
+        }
+        html += "</select>";
+        return html;
+      }
+
+      function usageFlags(name, value)
+      {
+        if(!value)
+          value = 0;
+
+        var flags = [];
+        flags.push([1, 'Foot', false]);
+        flags.push([2, 'Bike', false]);
+        flags.push([4, 'Ski', true]);
+        flags.push([8, 'Snowshoe', true]);
+        flags.push([16, 'Skijor', true]);
+        flags.push([32, 'Mush', true]);
+        flags.push([64, 'Dog Walk', false]);
+        flags.push([128, 'Off-leash Dog', false]);
+
+        var html = "<div>";
+
+        for (var i = 0; i < flags.length; i++) 
+        {
+          if(name == "winter_usage" || flags[i][2] == false )
+            html += "<div><input name='" + name + "' type='checkbox' " + ((flags[i][0] & value) > 0 ? "checked" : "") + " value='" + flags[i][0] + "'/> " + flags[i][1] + "</div>";
+        }
+
+        html += "</div>";
+        return html;
+      }
+
+    </script>
+
+  </body>
+</html>
