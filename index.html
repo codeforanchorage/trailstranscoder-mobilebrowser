@@ -44,12 +44,20 @@
 
           Parse.initialize("SP4alRjyHRf8l5J8XBz7EeNUHYq63YHtw2KSGd1A", "rzTDXw4GTyvp5qKOJb3VrtbaNmcrsUzFvGm8V39R");
 
-          map = L.map("map-canvas").setView(L.latLng(61.15368, -150.05472), 10);
+          map = L.map("map-canvas"); //.setView(L.latLng(61.15368, -150.05472), 10);
 
           L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
               maxZoom:18,
               id: 'examples.map-20v6611k'
           }).addTo(map);
+
+
+
+          map.on('locationfound', onLocationFound);
+          map.on('locationerror', onLocationError);
+
+
+          map.locate({setView: true, maxZoom: 12});
 
         // var points = [];
         // points.push(L.latLng(61.15368, -150.05472));
@@ -67,6 +75,30 @@
           //loadGeoJson("output/muni/all.geojson");
           //loadGeoJson("https://s3.amazonaws.com/aktrails/1/muni/kincaid_ski_trails/all.geojson");
       });
+
+      function onLocationFound(e) 
+      {
+        var radius = e.accuracy / 2;
+
+        var locationIcon = L.icon({
+            iconUrl: 'images/marker-icon.png',
+            iconRetinaUrl: 'images/marker-icon-2x.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [12, 0],
+            shadowUrl: 'images/marker-shadow.png',
+            shadowSize: [41, 41],
+            shadowAnchor: [10, 41]
+        });
+
+        L.marker(e.latlng, {icon:locationIcon}).addTo(map);
+        L.circle(e.latlng, radius).addTo(map);
+      }
+
+      function onLocationError(e) 
+      {
+        alert(e.message);
+      }
 
       function clearAndLoad(url)
       {
@@ -197,7 +229,7 @@
           });
 
 
-          var TrailObject = Parse.Object.extend("Trail");
+          var TrailObject = Parse.Object.extend("TrailUpdate");
           var newTrail = new TrailObject();
           newTrail.save(saveme).then(function(object) {
             alert("Saved it.");
