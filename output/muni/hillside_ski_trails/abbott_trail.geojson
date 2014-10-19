@@ -3,6 +3,6 @@
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                                                                                 
 "features": [
-{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Ski", "source": "Muni", "system": "Hillside Ski Trails", "name": "Abbott Trail", "surface": "Earth", "lighting": "No", "winter_usage": 4, "summer_usage": 67, "ski_difficulty": "advanced", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/hillside_ski_trails\/abbott_trail.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.741325775999485, 61.144087423713245 ], [ -149.741388541632119, 61.14402699101332 ] ] ] } }
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Ski", "source": "Muni", "system": "Hillside Ski Trails", "name": "Abbott Trail", "surface": "Earth", "lighting": "No", "winter_usage": 4, "summer_usage": 67, "ski_difficulty": "advanced", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/hillside_ski_trails\/abbott_trail.geojson", "extent": "-149.741388542 61.144026991 -149.741325776 61.1440874237" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.741325775999485, 61.144087423713245 ], [ -149.741388541632119, 61.14402699101332 ] ] ] } }
 ]
 }

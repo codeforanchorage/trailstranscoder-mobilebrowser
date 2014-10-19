@@ -41,6 +41,7 @@
       var current_filter = null;
       var current_location_marker = null;
       var current_location_circle = null;
+      var paths = [];
 
       $(function() {
 
@@ -62,19 +63,69 @@
           if (navigator.geolocation) 
             navigator.geolocation.watchPosition(locationChanged);
 
-          map.on("viewreset", function(e) {
-            loadCurrentBoundingBox();
-          });
+          $.get("data/paths.geojson", null, function(obj) {
+            if(obj != null)
+            {
+              for (var i = 0; i < obj.features.length; i++) 
+              {
+                  var feature = obj.features[i];
+                  var newpath = {};
+                  newpath.path = feature.properties.path;
+                  var extent = feature.properties.extent;
+                  var extent_parts = extent.split(" ");
+                  newpath.min_lon = parseFloat(extent_parts[0]);
+                  newpath.min_lat = parseFloat(extent_parts[1]);
+                  newpath.max_lon = parseFloat(extent_parts[2]);
+                  newpath.max_lat = parseFloat(extent_parts[3]);
+                  newpath.isLoaded = false;
+                  newpath.isQueued = false;
+                  paths.push(newpath);
+               }
+
+               map.on("viewreset", function(e) {
+                  loadCurrentExtent();
+                });
+
+               window.setInterval(loadNextInQueue, 200);
+            }              
+          }, "json");
+
+          
 
           // map.on("zoomend", function(e) {
           //   loadCurrentBoundingBox();
           // });          
 
-          loadCurrentBoundingBox();
+          // loadCurrentBoundingBox();
           //clearMap();
 
           //loadGeoJson("data/all.geojson");
       });
+
+      function loadCurrentExtent()
+      {
+        var bounds = map.getBounds();
+        var min_lon = bounds.getWest();
+        var max_lon = bounds.getEast();
+        var max_lat = bounds.getNorth();
+        var min_lat = bounds.getSouth();
+
+        for (var i = 0; i < paths.length; i++) 
+        {
+          var path = paths[i];
+          if(path.isLoaded == false)
+          {
+            if(path.min_lon < max_lon && path.max_lon > min_lon && path.min_lat < max_lat && path.max_lat > min_lat)
+            {
+              if(path.isQueued == false)
+              {
+                loadQueue.push(path);               
+                path.isQueued = true; 
+              }
+            }
+          }
+        }
+      }
 
       var loadQueue = [];
       var geoJsonCache = {};
@@ -119,16 +170,14 @@
         if(loadQueue.length > 0)
         {
           var next = loadQueue.pop();
-          var url = "output/" + next;
+          var url = "output/" + next.path;
           $.get(url, null, function(obj) {
             if(obj != null)
             {
-              geoJsonCache[next] = obj;
               drawGeoJson(obj);
             }
-              
-            loadNextInQueue();
           }, "json");
+          next.isLoaded = true;
         }
       }
 
