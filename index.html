@@ -51,6 +51,7 @@
 
           L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
               maxZoom:18,
+              minZoom:15,
               id: 'examples.map-20v6611k'
           }).addTo(map);
 
@@ -58,7 +59,7 @@
           map.on('locationerror', onLocationError);
 
 
-          map.locate({setView: true, maxZoom: 12});
+          map.locate({setView: true, maxZoom: 18});
 
           if (navigator.geolocation) 
             navigator.geolocation.watchPosition(locationChanged);
@@ -83,10 +84,16 @@
                }
 
                map.on("viewreset", function(e) {
-                  loadCurrentExtent();
+                  if(!hasStartedLoadingQueue)
+                  {
+                    loadNextInQueue();
+                    hasStartedLoadingQueue = true;
+                  }
+                    
                 });
 
-               window.setInterval(loadNextInQueue, 200);
+                // loadNextInQueue();
+               //window.setTimeout(loadNextInQueue, 1000);
             }              
           }, "json");
 
@@ -102,7 +109,7 @@
           //loadGeoJson("data/all.geojson");
       });
 
-      function loadCurrentExtent()
+      function isInCurrentExtent(path)
       {
         var bounds = map.getBounds();
         var min_lon = bounds.getWest();
@@ -110,19 +117,20 @@
         var max_lat = bounds.getNorth();
         var min_lat = bounds.getSouth();
 
+        if(path.min_lon < max_lon && path.max_lon > min_lon && path.min_lat < max_lat && path.max_lat > min_lat)
+          return true;
+        else
+          return false;
+      }
+
+      function queueCurrentExtent()
+      {
         for (var i = 0; i < paths.length; i++) 
         {
           var path = paths[i];
           if(path.isLoaded == false)
           {
-            if(path.min_lon < max_lon && path.max_lon > min_lon && path.min_lat < max_lat && path.max_lat > min_lat)
-            {
-              if(path.isQueued == false)
-              {
-                loadQueue.push(path);               
-                path.isQueued = true; 
-              }
-            }
+            path.isQueued = isInCurrentExtent(path);
           }
         }
       }
@@ -165,20 +173,33 @@
         // loadGeoJson("data/all.geojson");
       }
 
+      var hasStartedLoadingQueue = false;
       function loadNextInQueue()
       {
-        if(loadQueue.length > 0)
+        for (var i = 0; i < paths.length; i++) 
         {
-          var next = loadQueue.pop();
-          var url = "output/" + next.path;
-          $.get(url, null, function(obj) {
-            if(obj != null)
-            {
-              drawGeoJson(obj);
-            }
-          }, "json");
-          next.isLoaded = true;
+          var path = paths[i];
+          if(path.isLoaded == false && isInCurrentExtent(path))
+          {
+            var url = "output/" + path.path;
+            var xhr = $.get(url, null, function(obj) {
+              if(obj != null)
+              {
+                drawGeoJson(obj);
+              }
+              //do it again in a little while
+              window.setTimeout(loadNextInQueue, 500);
+            }, "json").fail(function() {
+              window.setTimeout(loadNextInQueue, 500);
+            });
+            path.isLoaded = true;
+            return;
+          }
         }
+
+        //if we got here, nothing need to be loaded within the bounding box
+        //try again in a second
+        window.setTimeout(loadNextInQueue, 1000);
       }
 
       function locationChanged(position) 
