@@ -51,7 +51,7 @@
 
           L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
               maxZoom:18,
-              minZoom:15,
+              minZoom:12,
               id: 'examples.map-20v6611k'
           }).addTo(map);
 
@@ -59,7 +59,7 @@
           map.on('locationerror', onLocationError);
 
 
-          map.locate({setView: true, maxZoom: 18});
+          map.locate({setView: true, maxZoom: 17});
 
           if (navigator.geolocation) 
             navigator.geolocation.watchPosition(locationChanged);
