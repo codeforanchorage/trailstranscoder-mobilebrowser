@@ -41,7 +41,7 @@
       var current_filter = null;
       var current_location_marker = null;
       var current_location_circle = null;
-      var paths = [];
+      var paths = {};
 
       $(function() {
 
@@ -70,17 +70,26 @@
               for (var i = 0; i < obj.features.length; i++) 
               {
                   var feature = obj.features[i];
-                  var newpath = {};
-                  newpath.path = feature.properties.path;
+                  var pathText = feature.properties.path;
                   var extent = feature.properties.extent;
                   var extent_parts = extent.split(" ");
-                  newpath.min_lon = parseFloat(extent_parts[0]);
-                  newpath.min_lat = parseFloat(extent_parts[1]);
-                  newpath.max_lon = parseFloat(extent_parts[2]);
-                  newpath.max_lat = parseFloat(extent_parts[3]);
-                  newpath.isLoaded = false;
-                  newpath.isQueued = false;
-                  paths.push(newpath);
+                  var newextent = {};
+                  newextent.min_lon = parseFloat(extent_parts[0]);
+                  newextent.min_lat = parseFloat(extent_parts[1]);
+                  newextent.max_lon = parseFloat(extent_parts[2]);
+                  newextent.max_lat = parseFloat(extent_parts[3]);
+
+                  if(paths[pathText])
+                  {
+                    paths[pathText].extents.push(newextent);
+                  }
+                  else
+                  {
+                    var newpath = {path:pathText,extents:[]};
+                    newpath.extents.push (newextent);
+                    newpath.isLoaded = false;
+                    paths[pathText] = newpath;
+                  }
                }
 
                map.on("viewreset", function(e) {
@@ -91,25 +100,20 @@
                   }
                     
                 });
-
-                // loadNextInQueue();
-               //window.setTimeout(loadNextInQueue, 1000);
             }              
           }, "json");
-
-          
-
-          // map.on("zoomend", function(e) {
-          //   loadCurrentBoundingBox();
-          // });          
-
-          // loadCurrentBoundingBox();
-          //clearMap();
-
-          //loadGeoJson("data/all.geojson");
       });
 
-      function isInCurrentExtent(path)
+      function pathIsInCurrentExtent(path)
+      {
+        for (var i = 0; i < path.extents.length; i++) {
+          if(isInCurrentExtent(path.extents[i]))
+            return true;
+        }
+        return false;
+      }
+
+      function isInCurrentExtent(extent)
       {
         var bounds = map.getBounds();
         var min_lon = bounds.getWest();
@@ -117,69 +121,23 @@
         var max_lat = bounds.getNorth();
         var min_lat = bounds.getSouth();
 
-        if(path.min_lon < max_lon && path.max_lon > min_lon && path.min_lat < max_lat && path.max_lat > min_lat)
+        if(extent.min_lon < max_lon && extent.max_lon > min_lon && extent.min_lat < max_lat && extent.max_lat > min_lat)
           return true;
         else
           return false;
       }
 
-      function queueCurrentExtent()
-      {
-        for (var i = 0; i < paths.length; i++) 
-        {
-          var path = paths[i];
-          if(path.isLoaded == false)
-          {
-            path.isQueued = isInCurrentExtent(path);
-          }
-        }
-      }
-
-      var loadQueue = [];
-      var geoJsonCache = {};
-
-      function loadCurrentBoundingBox()
-      {
-        var bounds = map.getBounds();
-        var minlon = bounds.getWest();
-        var maxlon = bounds.getEast();
-        var maxlat = bounds.getNorth();
-        var minlat = bounds.getSouth();
-
-        var CurrentTrailData = Parse.Object.extend("CurrentTrailData");
-        var query = new Parse.Query(CurrentTrailData);
-        query.exists("path");
-        query.lessThan("min_lon", maxlon);
-        query.greaterThan("max_lon", minlon);
-        query.lessThan("min_lat", maxlat);
-        query.greaterThan("max_lat", minlat);
-        query.find({
-          success: function(results) {
-            for (var i = 0; i < results.length; i++) { 
-              var segment = results[i];
-              var path = segment.get("path");
-              if(!geoJsonCache[path])
-                loadQueue.push(path);
-            }
-            //clearMap();
-            loadNextInQueue();
-          },
-          error: function(error) {
-            alert("Error: " + error.code + " " + error.message);
-          }
-        });
-
-        // clearMap();
-        // loadGeoJson("data/all.geojson");
-      }
-
       var hasStartedLoadingQueue = false;
+
       function loadNextInQueue()
       {
-        for (var i = 0; i < paths.length; i++) 
+        var pathNames = keys(paths);
+
+        for (var i = 0; i < pathNames.length; i++) 
         {
-          var path = paths[i];
-          if(path.isLoaded == false && isInCurrentExtent(path))
+          var pname = pathNames[i];
+          var path = paths[pname];
+          if(path.isLoaded == false && pathIsInCurrentExtent(path))
           {
             var url = "output/" + path.path;
             var xhr = $.get(url, null, function(obj) {
@@ -303,9 +261,7 @@
                 var opts = {opacity:0.75, weight:10, color:'green'};
                 var polyline = L.polyline(points, opts).addTo(map);
                 polyline.bindPopup(popupHtml(feature));
-                //store a reference to the polyline with the feature
-                //this is so that we can do a quick search later
-                feature.polyline = polyline;
+                //feature.polyline = polyline;
               }
           }
         }
