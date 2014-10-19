@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Ski", "source": "Muni", "system": "Kincaid Ski Trails", "name": "Lekisch Dark Alley", "surface": "Earth", "lighting": "No", "winter_usage": 4, "summer_usage": 67, "ski_difficulty": "Intermediate", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/kincaid_ski_trails\/lekisch_dark_alley.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -150.04817777601005, 61.1534949808551 ], [ -150.049005626142701, 61.153672688419178 ], [ -150.049294227132322, 61.153701605488621 ], [ -150.049359741018833, 61.153696069405591 ], [ -150.049466799132318, 61.153677663586613 ], [ -150.049562302425954, 61.153648275791426 ], [ -150.049700694852106, 61.153575874211562 ], [ -150.049763609669441, 61.153530615408961 ], [ -150.050220389972935, 61.153152232468607 ], [ -150.050294972295944, 61.153111545726276 ], [ -150.050488472573647, 61.153022309920487 ] ] ] } }
+]
+}

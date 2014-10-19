@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Foot,Bike,Dog Walk", "source": "DNR", "system": "Chugach State Park", "name": "Spur 1", "surface": "Unknown", "lighting": "No", "winter_usage": 67, "summer_usage": 67, "ski_difficulty": null, "ski_mode": null, "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "dnr\/chugach_state_park\/spur_1.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.139579, 60.97007, 0.0 ], [ -149.13948, 60.970155, 0.0 ], [ -149.139416, 60.970198, 0.0 ], [ -149.13933, 60.970308, 0.0 ], [ -149.139248, 60.970387, 0.0 ], [ -149.1392, 60.970437, 0.0 ], [ -149.138822, 60.97054, 0.0 ], [ -149.138822, 60.97054, 0.0 ], [ -149.13843, 60.970513, 0.0 ], [ -149.138254, 60.970514, 0.0 ] ] ] } }
+]
+}

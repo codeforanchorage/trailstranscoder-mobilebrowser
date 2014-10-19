@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Ski", "source": "Muni", "system": "Kincaid Ski Trails", "name": "Tashas Turn (connector)", "surface": "Earth", "lighting": "Yes", "winter_usage": 4, "summer_usage": 67, "ski_difficulty": "Intermediate", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/kincaid_ski_trails\/tashas_turn_(connector).geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -150.04954155402018, 61.157158893005175 ], [ -150.049719580380327, 61.157142367713426 ], [ -150.049832774265894, 61.157140802372176 ], [ -150.05047644044555, 61.157203917364718 ], [ -150.050841783544911, 61.157262379658015 ], [ -150.050975011077611, 61.157304022637497 ], [ -150.051071393998882, 61.157350570619485 ], [ -150.051132678009736, 61.157396242728296 ], [ -150.051259165768954, 61.157512760982755 ], [ -150.051402845511348, 61.157661568927203 ], [ -150.051487631965756, 61.15783162180827 ], [ -150.051482848749686, 61.157919192490169 ], [ -150.051454792122058, 61.157994639692014 ], [ -150.051414932006537, 61.158057299767776 ], [ -150.051298933767953, 61.158192350436792 ] ] ] } }
+]
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Ski", "source": "Muni", "system": "Mirror Lake Ski Trails", "name": "N Connect", "surface": "Earth", "lighting": "No", "winter_usage": 4, "summer_usage": 67, "ski_difficulty": "Novice", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/mirror_lake_ski_trails\/n_connect.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.423269623395441, 61.429327357545681 ], [ -149.423693247979884, 61.429219507057525 ], [ -149.423944158281358, 61.429166489392131 ], [ -149.424085551689217, 61.429129205425525 ], [ -149.424160381592856, 61.429089418641112 ], [ -149.424286790355922, 61.428984757414639 ], [ -149.424426473594849, 61.428903825626051 ] ] ] } }
+]
+}

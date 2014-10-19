@@ -62,24 +62,75 @@
           if (navigator.geolocation) 
             navigator.geolocation.watchPosition(locationChanged);
 
-          
+          map.on("viewreset", function(e) {
+            loadCurrentBoundingBox();
+          });
 
-        // var points = [];
-        // points.push(L.latLng(61.15368, -150.05472));
-        // points.push(L.latLng(61.15338, -150.02272));
-        // points.push(L.latLng(61.25338, -150.12272));
+          // map.on("zoomend", function(e) {
+          //   loadCurrentBoundingBox();
+          // });          
 
-        // var polyline = L.polyline(points, {"color":"red"}).addTo(map);
-        // polyline.bindPopup("hi <b>there</b><a href='http://www.google.com'>edit me</a>");
-        //polyline.bindPopup(popupHtml(feature));
+          loadCurrentBoundingBox();
+          //clearMap();
 
-
-          clearMap();
-
-          loadGeoJson("data/all.geojson");
-          //loadGeoJson("output/muni/all.geojson");
-          //loadGeoJson("https://s3.amazonaws.com/aktrails/1/muni/kincaid_ski_trails/all.geojson");
+          //loadGeoJson("data/all.geojson");
       });
+
+      var loadQueue = [];
+      var geoJsonCache = {};
+
+      function loadCurrentBoundingBox()
+      {
+        var bounds = map.getBounds();
+        var minlon = bounds.getWest();
+        var maxlon = bounds.getEast();
+        var maxlat = bounds.getNorth();
+        var minlat = bounds.getSouth();
+
+        var CurrentTrailData = Parse.Object.extend("CurrentTrailData");
+        var query = new Parse.Query(CurrentTrailData);
+        query.exists("path");
+        query.lessThan("min_lon", maxlon);
+        query.greaterThan("max_lon", minlon);
+        query.lessThan("min_lat", maxlat);
+        query.greaterThan("max_lat", minlat);
+        query.find({
+          success: function(results) {
+            for (var i = 0; i < results.length; i++) { 
+              var segment = results[i];
+              var path = segment.get("path");
+              if(!geoJsonCache[path])
+                loadQueue.push(path);
+            }
+            //clearMap();
+            loadNextInQueue();
+          },
+          error: function(error) {
+            alert("Error: " + error.code + " " + error.message);
+          }
+        });
+
+        // clearMap();
+        // loadGeoJson("data/all.geojson");
+      }
+
+      function loadNextInQueue()
+      {
+        if(loadQueue.length > 0)
+        {
+          var next = loadQueue.pop();
+          var url = "output/" + next;
+          $.get(url, null, function(obj) {
+            if(obj != null)
+            {
+              geoJsonCache[next] = obj;
+              drawGeoJson(obj);
+            }
+              
+            loadNextInQueue();
+          }, "json");
+        }
+      }
 
       function locationChanged(position) 
       {
@@ -140,38 +191,17 @@
       function loadGeoJson(url)
       {
           $.get(url, null, function(obj) {
-            current = obj;
-            drawGeoJson();
+            drawGeoJson(obj);
           }, "json");
       }
 
-      function drawGeoJson()
+      function drawGeoJson(obj)
       {
-        if(current != null)
+        if(obj != null)
         {
-          current_filter = {};
-          for (var i = 0; i < current.features.length; i++)
+          for (var i = 0; i < obj.features.length; i++)
           {
-              var feature = current.features[i];
-
-              //fill the empty_feature with a superset of fields (for filtering later)
-              for(var key in feature.properties)
-              {
-                if(feature.properties.hasOwnProperty(key))
-                {
-                  var val = feature.properties[key];
-                  if(!current_filter[key])
-                    current_filter[key] = {};
-
-                  if(val != null)
-                  {
-                    if(current_filter[key][val])
-                      current_filter[key][val]++;
-                    else
-                      current_filter[key][val] = 1;
-                  }
-                }
-              }
+              var feature = obj.features[i];
 
               var geom = feature.geometry;
 

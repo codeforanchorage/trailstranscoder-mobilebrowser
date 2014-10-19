@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Ski", "source": "Muni", "system": "Hillside Ski Trails", "name": "Multi-use To Bivouc", "surface": "Earth", "lighting": "No", "winter_usage": 4, "summer_usage": 67, "ski_difficulty": "Novice", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/hillside_ski_trails\/multi-use_to_bivouc.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.741703477258142, 61.143916521347386 ], [ -149.74160871364964, 61.143945805672857 ], [ -149.741431799116612, 61.144014279233481 ] ] ] } },
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Ski", "source": "Muni", "system": "Hillside Ski Trails", "name": "Multi-use To Bivouc", "surface": "Earth", "lighting": "No", "winter_usage": 4, "summer_usage": 67, "ski_difficulty": "Novice", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/hillside_ski_trails\/multi-use_to_bivouc.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.742947722117179, 61.143934480530561 ], [ -149.742632272402716, 61.143946612529518 ], [ -149.742182291516514, 61.143871249088591 ], [ -149.742093025969041, 61.143866269812335 ], [ -149.741978324167746, 61.143867864888612 ], [ -149.74184690221179, 61.143882197786809 ], [ -149.74172301776224, 61.143910482857535 ], [ -149.741703477258142, 61.143916521347386 ] ] ] } }
+]
+}

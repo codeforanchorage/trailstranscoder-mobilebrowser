@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Ski", "source": "Muni", "system": "Mirror Lake Ski Trails", "name": "Start Area Trail", "surface": "Earth", "lighting": "No", "winter_usage": 4, "summer_usage": 67, "ski_difficulty": "Novice", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/mirror_lake_ski_trails\/start_area_trail.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.420133988352774, 61.429666500686487 ], [ -149.419978758799942, 61.42968881289223 ] ] ] } },
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Ski", "source": "Muni", "system": "Mirror Lake Ski Trails", "name": "Start Area Trail", "surface": "Earth", "lighting": "No", "winter_usage": 4, "summer_usage": 67, "ski_difficulty": "Novice", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/mirror_lake_ski_trails\/start_area_trail.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.424426473594849, 61.428903825626051 ], [ -149.424469776168422, 61.428942232463569 ], [ -149.424486399931766, 61.429007425229393 ], [ -149.424586081895256, 61.429093356975592 ], [ -149.424590746945483, 61.429126285358841 ], [ -149.424580855102306, 61.429159165920851 ], [ -149.424553992403958, 61.429177008584325 ], [ -149.424440915502799, 61.429214286862994 ], [ -149.424129615185336, 61.429277858283278 ] ] ] } }
+]
+}

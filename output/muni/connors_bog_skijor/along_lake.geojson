@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Skijor", "source": "Muni", "system": "Connors Bog Skijor", "name": "Along Lake", "surface": "Earth", "lighting": "No", "winter_usage": 16, "summer_usage": 67, "ski_difficulty": null, "ski_mode": null, "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/connors_bog_skijor\/along_lake.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.935910817111051, 61.168762932627509 ], [ -149.935935021810252, 61.168951392885454 ] ] ] } },
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Skijor", "source": "Muni", "system": "Connors Bog Skijor", "name": "Along Lake", "surface": "Earth", "lighting": "No", "winter_usage": 16, "summer_usage": 67, "ski_difficulty": null, "ski_mode": null, "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/connors_bog_skijor\/along_lake.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.935935021810252, 61.168951392885454 ], [ -149.935953016273231, 61.169071414132787 ], [ -149.936014477180606, 61.169244028341922 ], [ -149.936013275489898, 61.169605184810585 ], [ -149.936067860626565, 61.169767080457184 ], [ -149.936067284220542, 61.169800005650934 ], [ -149.936044128270595, 61.169853768053159 ], [ -149.936021511354625, 61.169884653033122 ], [ -149.935799649524057, 61.170062842324135 ], [ -149.935654424309632, 61.170222777583795 ] ] ] } }
+]
+}

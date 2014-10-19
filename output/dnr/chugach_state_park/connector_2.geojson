@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Foot,Bike,Dog Walk", "source": "DNR", "system": "Chugach State Park", "name": "Connector 2", "surface": "Unknown", "lighting": "No", "winter_usage": 67, "summer_usage": 67, "ski_difficulty": null, "ski_mode": null, "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "dnr\/chugach_state_park\/connector_2.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.268303, 61.2264, 0.0 ], [ -149.268191, 61.226348, 0.0 ], [ -149.268081, 61.226292, 0.0 ], [ -149.267975, 61.226223, 0.0 ], [ -149.26787, 61.226146, 0.0 ], [ -149.267753, 61.226054, 0.0 ], [ -149.267648, 61.225961, 0.0 ], [ -149.267542, 61.225857, 0.0 ], [ -149.267456, 61.225753, 0.0 ], [ -149.26739, 61.225648, 0.0 ], [ -149.267283, 61.225556, 0.0 ], [ -149.267193, 61.225514, 0.0 ] ] ] } }
+]
+}

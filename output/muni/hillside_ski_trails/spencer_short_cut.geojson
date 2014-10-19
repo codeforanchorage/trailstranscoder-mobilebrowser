@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Ski", "source": "Muni", "system": "Hillside Ski Trails", "name": "Spencer Short Cut", "surface": "Earth", "lighting": "No", "winter_usage": 4, "summer_usage": 67, "ski_difficulty": "advanced", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/hillside_ski_trails\/spencer_short_cut.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.734049747765368, 61.146881736304202 ], [ -149.734236857519278, 61.147031692254394 ], [ -149.734371874022884, 61.147205895343411 ], [ -149.73448296239485, 61.147395455549884 ], [ -149.734546455258084, 61.147442205758921 ] ] ] } }
+]
+}

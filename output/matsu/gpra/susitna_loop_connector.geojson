@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Foot,Bike,Dog Walk", "source": "Matsu", "system": "GPRA", "name": "Susitna Loop Connector", "surface": "Unknown", "lighting": "No", "winter_usage": 67, "summer_usage": 67, "ski_difficulty": null, "ski_mode": null, "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "matsu\/gpra\/susitna_loop_connector.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.292058225647196, 61.70495070134664, 0.0 ], [ -149.292207316576679, 61.704969161277702, 0.0 ], [ -149.2922503683304, 61.704976259970685, 0.0 ], [ -149.292290523900988, 61.704986493798692, 0.0 ], [ -149.292326775918667, 61.704999604477798, 0.0 ], [ -149.292358218754686, 61.7050152660428, 0.0 ], [ -149.292652184765728, 61.705187052339163, 0.0 ], [ -149.293113708899995, 61.705457728771727, 0.0 ] ] ] } }
+]
+}

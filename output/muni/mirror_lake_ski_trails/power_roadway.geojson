@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Ski", "source": "Muni", "system": "Mirror Lake Ski Trails", "name": "Power Roadway", "surface": "Earth", "lighting": "No", "winter_usage": 4, "summer_usage": 67, "ski_difficulty": "Novice", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/mirror_lake_ski_trails\/power_roadway.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.419978758799942, 61.42968881289223 ], [ -149.419922906780158, 61.429654435349946 ], [ -149.419907738039853, 61.429611036872295 ], [ -149.420019893008003, 61.429165630501863 ], [ -149.420014292354978, 61.429001517308222 ], [ -149.419990557804084, 61.428954695745588 ] ] ] } }
+]
+}

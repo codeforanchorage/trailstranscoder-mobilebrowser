@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Skijor", "source": "Muni", "system": "Connors Bog Skijor", "name": "Loop", "surface": "Earth", "lighting": "No", "winter_usage": 16, "summer_usage": 67, "ski_difficulty": null, "ski_mode": null, "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/connors_bog_skijor\/loop.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.931183685748778, 61.168723039604771 ], [ -149.931191294018021, 61.168727466908187 ] ] ] } },
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Skijor", "source": "Muni", "system": "Connors Bog Skijor", "name": "Loop", "surface": "Earth", "lighting": "No", "winter_usage": 16, "summer_usage": 67, "ski_difficulty": null, "ski_mode": null, "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/connors_bog_skijor\/loop.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.929892243976099, 61.167893079725701 ], [ -149.930110843662334, 61.168032762171968 ], [ -149.930330882863899, 61.168198586232556 ], [ -149.931183685748778, 61.168723039604771 ] ] ] } }
+]
+}

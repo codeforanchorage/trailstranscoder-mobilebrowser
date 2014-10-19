@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Foot,Bike,Dog Walk", "source": "Muni", "system": "Tour of Anchorage", "name": "Unnamed", "surface": "Earth", "lighting": "No", "winter_usage": 67, "summer_usage": 67, "ski_difficulty": null, "ski_mode": null, "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/tour_of_anchorage\/unnamed.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.799393022553232, 61.198057033540344 ], [ -149.799417515218579, 61.197937243247175 ], [ -149.799418322649217, 61.197795079152392 ], [ -149.799451712050484, 61.197720422654676 ], [ -149.799447489122826, 61.197609745828871 ] ] ] } }
+]
+}

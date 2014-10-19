@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Ski", "source": "Muni", "system": "Beech Lake Ski Trails", "name": "Low Road", "surface": "Earth", "lighting": "Yes", "winter_usage": 4, "summer_usage": 67, "ski_difficulty": "Unknown", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/beech_lake_ski_trails\/low_road.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.543916780003599, 61.371884503219555 ], [ -149.544135667041132, 61.371915557736621 ], [ -149.544241284864967, 61.371935834630001 ], [ -149.544356148010166, 61.371971486086188 ], [ -149.544552234837738, 61.372046738363117 ], [ -149.544735123021866, 61.372091565211051 ], [ -149.54486174044672, 61.372115957772721 ], [ -149.545497868525189, 61.372202987843508 ], [ -149.546142447515109, 61.372312912285281 ], [ -149.54632236307441, 61.3723270834926 ], [ -149.546641737999096, 61.372327746160749 ], [ -149.546755452472809, 61.372335119891751 ], [ -149.546821034229225, 61.372343766607642 ], [ -149.547119490106638, 61.372423897168318 ], [ -149.547570247723144, 61.372608744289835 ], [ -149.547835585314857, 61.372671961395461 ], [ -149.548103675358107, 61.372705689745537 ] ] ] } }
+]
+}

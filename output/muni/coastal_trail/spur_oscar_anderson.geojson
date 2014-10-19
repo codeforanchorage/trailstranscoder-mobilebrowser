@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "summer_usage_list": "Foot,Bike,Dog Walk", "winter_usage_list": "Foot,Bike,Ski,Dog Walk", "source": "Muni", "system": "Coastal Trail", "name": "Spur Oscar Anderson", "surface": "Concrete", "lighting": "No", "winter_usage": 71, "summer_usage": 67, "ski_difficulty": "Unknown", "ski_mode": "Both", "direction": "2way", "handicap_accessible": "No", "comments": null, "image_url": null, "path": "muni\/coastal_trail\/spur_oscar_anderson.geojson" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -149.906328329601848, 61.218501154997305 ], [ -149.90627581533434, 61.218451875825473 ], [ -149.906258179353642, 61.218421088543877 ], [ -149.906257067176568, 61.218377316025702 ], [ -149.90627729296574, 61.21831167922528 ], [ -149.906327922390545, 61.218275468004222 ], [ -149.906500339143861, 61.218188054474851 ], [ -149.90654761389564, 61.218150475811321 ], [ -149.906562307604247, 61.218096458561902 ], [ -149.906574747660727, 61.217964476197785 ], [ -149.90660113429368, 61.217911834782427 ], [ -149.906674884562676, 61.217856493148709 ], [ -149.90690022703609, 61.217733555941557 ], [ -149.906883285968433, 61.21758650502565 ] ] ] } }
+]
+}
