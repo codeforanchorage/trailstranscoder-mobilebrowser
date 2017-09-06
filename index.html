@@ -61,8 +61,8 @@
 
           map.locate({setView: true, maxZoom: 17});
 
-          if (navigator.geolocation) 
-            navigator.geolocation.watchPosition(locationChanged);
+          //if (navigator.geolocation) 
+          //  navigator.geolocation.watchPosition(locationChanged);
 
           $.get("data/paths.geojson", null, function(obj) {
             if(obj != null)
